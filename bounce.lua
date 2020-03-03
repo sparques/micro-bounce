@@ -7,6 +7,10 @@ local buffer = import("micro/buffer")
 
 -- NOTE: it's up to the user to bind the below functions to key presses.
 
+function init()
+	config.AddRuntimeFile("bounce", config.RTHelp, "help/bounce.md")
+end
+
 -- bounce cursor between start of line and first non-whitespace character
 -- slightly different than how micro's default home works, this is first non-whitespace
 -- character, then start of line. micro works backwards, start of line, then 
@@ -14,9 +18,8 @@ local buffer = import("micro/buffer")
 function smartHome(bp)
 	local c = bp.Buf:GetActiveCursor()
 	local origX = c.Loc.X
-	local origY = c.Loc.Y
 	c:StartOfText()
-	if origX == c.Loc.X and origY == c.Loc.Y then
+	if origX == c.Loc.X then
 		c:Start()
 	end
 	bp:Relocate()
