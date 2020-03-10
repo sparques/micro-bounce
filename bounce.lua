@@ -25,6 +25,7 @@ function smartHome(bp)
 	bp:Relocate()
 end
 
+-- bounce cursor between matching brackets
 function bounce(bp)
 	local bracketPairs = { {123,125}, {91,93}, {40,41} }
 
@@ -37,5 +38,19 @@ function bounce(bp)
 			bp:Relocate()
 			return
 		end
+	end
+end
+
+-- keepLoc / gotoStoredLoc - easier than memorizing line numbers 
+local storedLoc = {}
+function keepLoc(bp)
+	storedLoc[bp.Buf.AbsPath] = -bp.Cursor.Loc
+end
+
+function gotoStoredLoc(bp)
+	local name = bp.Buf.AbsPath
+	if storedLoc[name] ~= nil then
+		bp.Cursor:GotoLoc(storedLoc[name])
+		bp:Relocate()
 	end
 end
