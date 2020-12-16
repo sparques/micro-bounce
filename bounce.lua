@@ -13,7 +13,7 @@ end
 
 -- bounce cursor between start of line and first non-whitespace character
 -- slightly different than how micro's default home works, this is first non-whitespace
--- character, then start of line. micro works backwards, start of line, then 
+-- character, then start of line. micro works backwards, start of line, then
 -- the first non-whitespace character
 function smartHome(bp)
 	local c = bp.Buf:GetActiveCursor()
@@ -41,7 +41,7 @@ function bounce(bp)
 	end
 end
 
--- keepLoc / gotoStoredLoc - easier than memorizing line numbers 
+-- keepLoc / gotoStoredLoc - easier than memorizing line numbers
 local storedLoc = {}
 function keepLoc(bp)
 	storedLoc[bp.Buf.AbsPath] = -bp.Cursor.Loc
@@ -51,6 +51,7 @@ function gotoStoredLoc(bp)
 	local name = bp.Buf.AbsPath
 	if storedLoc[name] ~= nil then
 		bp.Cursor:GotoLoc(storedLoc[name])
+		bp.Cursor:ResetSelection()
 		bp:Relocate()
 	end
 end
