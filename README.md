@@ -21,3 +21,13 @@ After installing, restart micro then run 'help bounce' to see how to bound the v
 functions to shortcuts.
 
 `> help bounce`
+
+## Tip / Example
+
+Getting back to the cursor location in a file after executing a find is a good use of the cursor saving functions the bounce plugin provides.
+
+Replace the default binding for CtrlF as shown:
+
+`"CtrlF": "lua:bounce.keepLoc,Find"`
+
+This will save the cursor location, then execute micro's find function. After you're done with your search you can call the bounce.gotoStoredLoc function to return to where the cursor was when the search was initiated. 
