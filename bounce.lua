@@ -32,9 +32,13 @@ function bounce(bp)
 	local c = bp.Buf:GetActiveCursor()
 	local start = -c.Loc
 	for k,b in pairs(bracketPairs) do
-		local matchLoc, _, ok = bp.Buf:FindMatchingBrace(b,-c.Loc)
+		local matchLoc, onLeft, ok = bp.Buf:FindMatchingBrace(b,-c.Loc)
 		if ok then
 			c:GotoLoc(matchLoc)
+			if onLeft then
+				local nudge = buffer.Loc(c.X-1, c.Y)
+				c:GotoLoc(nudge)
+			end
 			bp:Relocate()
 			return
 		end
